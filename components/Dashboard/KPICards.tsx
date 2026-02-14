@@ -59,7 +59,7 @@ export function KPICards({ totalEquity, netInvested, totalReturn, xirr, projecti
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
             {/* Total Equity */}
             <div className="bg-gray-900 border border-gray-800 p-5 rounded-xl shadow-sm hover:border-blue-500/30 transition-colors flex flex-col h-full">
-                <div className="flex items-center gap-3 mb-2">
+                <div className="flex items-center gap-3 mb-2 h-14">
                     <div className="p-2 bg-blue-500/10 rounded-lg text-blue-500">
                         <Wallet size={20} />
                     </div>
@@ -120,8 +120,8 @@ export function KPICards({ totalEquity, netInvested, totalReturn, xirr, projecti
             </div>
 
             {/* Net Invested */}
-            <div className="bg-gray-900 border border-gray-800 p-5 rounded-xl shadow-sm hover:border-emerald-500/30 transition-colors">
-                <div className="flex items-center gap-3 mb-2">
+            <div className="bg-gray-900 border border-gray-800 p-5 rounded-xl shadow-sm hover:border-emerald-500/30 transition-colors flex flex-col h-full">
+                <div className="flex items-center gap-3 mb-2 h-14">
                     <div className="p-2 bg-emerald-500/10 rounded-lg text-emerald-500">
                         <ArrowUpRight size={20} />
                     </div>
@@ -133,23 +133,29 @@ export function KPICards({ totalEquity, netInvested, totalReturn, xirr, projecti
             </div>
 
             {/* Total Return */}
-            <div className="bg-gray-900 border border-gray-800 p-5 rounded-xl shadow-sm hover:border-purple-500/30 transition-colors">
-                <div className="flex items-center gap-3 mb-2">
+            <div className="bg-gray-900 border border-gray-800 p-5 rounded-xl shadow-sm hover:border-purple-500/30 transition-colors flex flex-col h-full">
+                <div className="flex items-center gap-3 mb-2 h-14">
                     <div className="p-2 bg-purple-500/10 rounded-lg text-purple-500">
                         <TrendingUp size={20} />
                     </div>
                     <span className="text-sm font-medium text-gray-400">Total Profit/Loss</span>
                 </div>
-                <div className="mt-2 flex items-baseline gap-2">
+                <div className="mt-2 min-h-[3.5rem]">
                     <span className={`text-3xl font-bold tracking-tight ${totalReturn >= 0 ? 'text-white' : 'text-red-400'}`}>
                         {totalReturn >= 0 ? '+' : ''}{formatCurrency(totalReturn)}
                     </span>
+                    <div className="mt-1">
+                        <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${totalReturn >= 0 ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20' : 'bg-red-500/10 text-red-500 border border-red-500/20'
+                            }`}>
+                            {netInvested > 0 ? ((totalReturn / netInvested) * 100).toFixed(2) : '0.00'}%
+                        </span>
+                    </div>
                 </div>
             </div>
 
             {/* XIRR */}
-            <div className="bg-gray-900 border border-gray-800 p-5 rounded-xl shadow-sm hover:border-amber-500/30 transition-colors">
-                <div className="flex items-center gap-3 mb-2">
+            <div className="bg-gray-900 border border-gray-800 p-5 rounded-xl shadow-sm hover:border-amber-500/30 transition-colors flex flex-col h-full">
+                <div className="flex items-center gap-3 mb-2 h-14">
                     <div className="p-2 bg-amber-500/10 rounded-lg text-amber-500">
                         <Target size={20} />
                     </div>
@@ -165,7 +171,7 @@ export function KPICards({ totalEquity, netInvested, totalReturn, xirr, projecti
 
             {/* Passive Income */}
             <div className="bg-gray-900 border border-gray-800 p-5 rounded-xl shadow-sm hover:border-cyan-500/30 transition-colors flex flex-col h-full">
-                <div className="flex items-center gap-3 mb-2">
+                <div className="flex items-center gap-3 mb-2 h-14">
                     <div className="p-2 bg-cyan-500/10 rounded-lg text-cyan-500">
                         <Anchor size={20} />
                     </div>
