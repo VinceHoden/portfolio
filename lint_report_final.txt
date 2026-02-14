@@ -1,0 +1,74 @@
+
+> portfolio@0.1.0 lint
+> eslint
+
+
+C:\Users\stefa\Documents\Antigravity\portfolio\app\history\page.tsx
+  7:10  warning  'format' is defined but never used    @typescript-eslint/no-unused-vars
+  7:18  warning  'parseISO' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\stefa\Documents\Antigravity\portfolio\components\Dashboard\GrowthChart.tsx
+  27:56  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @typescript-eslint/no-explicit-any
+  77:40  error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+C:\Users\stefa\Documents\Antigravity\portfolio\components\Dashboard\GrowthChart.tsx:77:40
+  75 |                         tickFormatter={(val) => `Ôé¼${val / 1000}k`}
+  76 |                     />
+> 77 |                     <Tooltip content={<CustomTooltip />} />
+     |                                        ^^^^^^^^^^^^^ This component is created during render
+  78 |                     <Area
+  79 |                         type="monotone"
+  80 |                         dataKey="invested"
+
+C:\Users\stefa\Documents\Antigravity\portfolio\components\Dashboard\GrowthChart.tsx:27:27
+  25 |
+  26 |     // CustomTooltip was defined but not used. Let's use it.
+> 27 |     const CustomTooltip = ({ active, payload, label }: any) => {
+     |                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 28 |         if (active && payload && payload.length) {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 29 |             return (
+     ÔÇª
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 46 |         return null;
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 47 |     };
+     | ^^^^^^ The component is created during render here
+  48 |
+  49 |     return (
+  50 |         <div className="h-[400px] w-full">  react-hooks/static-components
+
+C:\Users\stefa\Documents\Antigravity\portfolio\components\Dashboard\KPICards.tsx
+  1:24  warning  'ArrowDownRight' is defined but never used  @typescript-eslint/no-unused-vars
+  1:40  warning  'Euro' is defined but never used            @typescript-eslint/no-unused-vars
+  1:46  warning  'Percent' is defined but never used         @typescript-eslint/no-unused-vars
+  3:10  warning  'cn' is defined but never used              @typescript-eslint/no-unused-vars
+
+C:\Users\stefa\Documents\Antigravity\portfolio\components\Dashboard\ProjectionChart.tsx
+  37:44  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\stefa\Documents\Antigravity\portfolio\components\Layout\Sidebar.tsx
+  5:46  warning  'LogOut' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\stefa\Documents\Antigravity\portfolio\hooks\usePortfolio.ts
+  24:9  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\stefa\Documents\Antigravity\portfolio\hooks\usePortfolio.ts:24:9
+  22 |         const loadedParams = storage.loadProjectionParams();
+  23 |
+> 24 |         setEntries(loadedEntries);
+     |         ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  25 |         if (loadedParams) {
+  26 |             setProjectionParams(loadedParams);
+  27 |         }  react-hooks/set-state-in-effect
+
+Ô£û 11 problems (4 errors, 7 warnings)
+

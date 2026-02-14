@@ -1,0 +1,62 @@
+
+> portfolio@0.1.0 lint
+> eslint
+
+
+C:\Users\stefa\Documents\Antigravity\portfolio\app\history\page.tsx
+  7:10  warning  'format' is defined but never used     @typescript-eslint/no-unused-vars
+  7:18  warning  'parseISO' is defined but never used   @typescript-eslint/no-unused-vars
+  8:10  warning  'ArrowUp' is defined but never used    @typescript-eslint/no-unused-vars
+  8:19  warning  'ArrowDown' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\stefa\Documents\Antigravity\portfolio\app\settings\page.tsx
+   5:42  warning  'Sun' is defined but never used                           @typescript-eslint/no-unused-vars
+   5:53  warning  'DollarSign' is defined but never used                    @typescript-eslint/no-unused-vars
+   9:40  warning  'setProjectionParams' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  39:18  warning  'e' is defined but never used                             @typescript-eslint/no-unused-vars
+
+C:\Users\stefa\Documents\Antigravity\portfolio\components\Dashboard\GrowthChart.tsx
+  27:56  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @typescript-eslint/no-explicit-any
+  77:40  error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+C:\Users\stefa\Documents\Antigravity\portfolio\components\Dashboard\GrowthChart.tsx:77:40
+  75 |                         tickFormatter={(val) => `Ôé¼${val / 1000}k`}
+  76 |                     />
+> 77 |                     <Tooltip content={<CustomTooltip />} />
+     |                                        ^^^^^^^^^^^^^ This component is created during render
+  78 |                     <Area
+  79 |                         type="monotone"
+  80 |                         dataKey="invested"
+
+C:\Users\stefa\Documents\Antigravity\portfolio\components\Dashboard\GrowthChart.tsx:27:27
+  25 |
+  26 |     // CustomTooltip was defined but not used. Let's use it.
+> 27 |     const CustomTooltip = ({ active, payload, label }: any) => {
+     |                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 28 |         if (active && payload && payload.length) {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 29 |             return (
+     ÔÇª
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 46 |         return null;
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 47 |     };
+     | ^^^^^^ The component is created during render here
+  48 |
+  49 |     return (
+  50 |         <div className="h-[400px] w-full">  react-hooks/static-components
+
+C:\Users\stefa\Documents\Antigravity\portfolio\components\Dashboard\ProjectionChart.tsx
+  37:44  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\stefa\Documents\Antigravity\portfolio\components\Layout\Sidebar.tsx
+  5:46  warning  'LogOut' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\stefa\Documents\Antigravity\portfolio\hooks\usePortfolio.ts
+  29:9  warning  Unused eslint-disable directive (no problems were reported from 'react-hooks/exhaustive-deps')
+
+Ô£û 13 problems (3 errors, 10 warnings)
+  0 errors and 1 warning potentially fixable with the `--fix` option.
+
