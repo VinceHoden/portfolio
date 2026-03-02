@@ -13,21 +13,12 @@ const DEFAULT_PROJECTION_PARAMS: ProjectionParams = {
 };
 
 export function usePortfolio() {
-    const [entries, setEntries] = useState<PortfolioEntry[]>([]);
-    const [projectionParams, setProjectionParams] = useState<ProjectionParams>(DEFAULT_PROJECTION_PARAMS);
-    const [isLoaded, setIsLoaded] = useState(false);
-
-    // Load data on mount - ensure this runs only on client to match server HTML (empty initially)
-    useEffect(() => {
-        const loadedEntries = storage.loadEntries();
+    const [entries, setEntries] = useState<PortfolioEntry[]>(() => storage.loadEntries());
+    const [projectionParams, setProjectionParams] = useState<ProjectionParams>(() => {
         const loadedParams = storage.loadProjectionParams();
-
-        setEntries(loadedEntries);
-        if (loadedParams) {
-            setProjectionParams(loadedParams);
-        }
-        setIsLoaded(true);
-    }, []);
+        return loadedParams ?? DEFAULT_PROJECTION_PARAMS;
+    });
+    const isLoaded = true;
 
     // Persist data on change
     useEffect(() => {

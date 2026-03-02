@@ -1,5 +1,4 @@
-import { ArrowUpRight, ArrowDownRight, Euro, Percent, Wallet, TrendingUp, Target, Calendar, Anchor } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { ArrowUpRight, Wallet, TrendingUp, Target, Calendar, Anchor } from 'lucide-react';
 import { calculateTimeUntilTarget } from "@/lib/finance";
 
 interface KPICardsProps {
