@@ -31,11 +31,10 @@
     "id": 1,
     "annualReturn": 7,
     "monthlyContribution": 1000,
-    "years": 10,
-    "target": null,
-    "retirementAge": null,
+    "years": 14,
+    "target": 1000000,
     "currentAge": null,
     "inflationRate": 2.5,
-    "updatedAt": "2026-03-02T22:21:23.230Z"
+    "updatedAt": "2026-03-02T22:28:58.353Z"
   }
 }
