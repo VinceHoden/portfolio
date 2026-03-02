@@ -35,6 +35,10 @@ export function calculateXIRR(cashFlows: CashFlow[], guess: number = 0.1): numbe
         days: differenceInDays(new Date(flow.date), firstDate)
     }));
 
+    if (flows[flows.length - 1].days === 0) {
+        return 0; // Cannot calculate annualized return for 0 duration
+    }
+
     for (let i = 0; i < maxIterations; i++) {
         let npv = 0;
         let dNpv = 0; // Derivative of NPV

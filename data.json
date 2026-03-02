@@ -1,0 +1,41 @@
+{
+  "entries": [
+    {
+      "date": "2021-08-17T00:00:00.000Z",
+      "equity": 17485,
+      "netInflow": 17485,
+      "id": "1ef02a02-6cc8-445a-891f-c5a319de98c3",
+      "createdAt": "2026-03-02T22:19:17.904Z",
+      "updatedAt": "2026-03-02T22:21:57.857Z"
+    },
+    {
+      "date": "2021-09-15T00:00:00.000Z",
+      "equity": 19458,
+      "netInflow": 1000,
+      "description": "",
+      "id": "a1dd37ae-8cd7-48e9-adbe-0ad3aa430b54",
+      "createdAt": "2026-03-02T22:20:09.903Z",
+      "updatedAt": "2026-03-02T22:20:09.903Z"
+    },
+    {
+      "date": "2021-10-15T00:00:00.000Z",
+      "equity": 21000,
+      "netInflow": 1000,
+      "description": "",
+      "id": "2e8d5229-b30e-47b8-814f-116775bf017b",
+      "createdAt": "2026-03-02T22:21:37.495Z",
+      "updatedAt": "2026-03-02T22:21:37.495Z"
+    }
+  ],
+  "settings": {
+    "id": 1,
+    "annualReturn": 7,
+    "monthlyContribution": 1000,
+    "years": 10,
+    "target": null,
+    "retirementAge": null,
+    "currentAge": null,
+    "inflationRate": 2.5,
+    "updatedAt": "2026-03-02T22:21:23.230Z"
+  }
+}

@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { PortfolioEntry, ProjectionParams } from '@/types';
-import * as storage from '@/lib/storage';
 import { calculateXIRR } from '@/lib/finance';
 
 const DEFAULT_PROJECTION_PARAMS: ProjectionParams = {
@@ -17,48 +16,116 @@ export function usePortfolio() {
     const [projectionParams, setProjectionParams] = useState<ProjectionParams>(DEFAULT_PROJECTION_PARAMS);
     const [isLoaded, setIsLoaded] = useState(false);
 
-    // Load data on mount - ensure this runs only on client to match server HTML (empty initially)
+    // Load data on mount
     useEffect(() => {
-        const loadedEntries = storage.loadEntries();
-        const loadedParams = storage.loadProjectionParams();
+        const fetchData = async () => {
+            try {
+                const [entriesRes, settingsRes] = await Promise.all([
+                    fetch('/api/entries'),
+                    fetch('/api/settings')
+                ]);
 
-        setEntries(loadedEntries);
-        if (loadedParams) {
-            setProjectionParams(loadedParams);
-        }
-        setIsLoaded(true);
+                if (entriesRes.ok) {
+                    const data = await entriesRes.json();
+                    setEntries(data);
+                }
+
+                if (settingsRes.ok) {
+                    const data = await settingsRes.json();
+                    setProjectionParams(data);
+                }
+            } catch (error) {
+                console.error('Failed to load portfolio data:', error);
+            } finally {
+                setIsLoaded(true);
+            }
+        };
+
+        fetchData();
     }, []);
 
     // Persist data on change
-    useEffect(() => {
-        if (isLoaded) {
-            storage.saveEntries(entries);
-        }
-    }, [entries, isLoaded]);
+    // Note: In a real app, we might want to debounce these or only save on explicit actions (like "Save" button or blur)
+    // For now, we'll keep the auto-save behavior but debounce it slightly essentially by relying on the add/remove functions to trigger updates.
+    // However, the original code used useEffect to save *whenever* state changed.
+    // To match that with an API, we should probably only trigger API calls in the modifier functions (addEntry, etc.) 
+    // rather than watching state, to avoid effect loops. 
+    // BUT, for `projectionParams` (settings), valid updates usually come from the settings page inputs.
+    // Let's implement specific savers.
 
+    const saveSettings = async (newParams: ProjectionParams) => {
+        try {
+            await fetch('/api/settings', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(newParams),
+            });
+        } catch (error) {
+            console.error('Failed to save settings:', error);
+        }
+    };
+
+    // Watch projectionParams for changes and save (debounce could be added here if needed)
     useEffect(() => {
         if (isLoaded) {
-            storage.saveProjectionParams(projectionParams);
+            const timeoutId = setTimeout(() => {
+                saveSettings(projectionParams);
+            }, 500); // 500ms debounce
+            return () => clearTimeout(timeoutId);
         }
     }, [projectionParams, isLoaded]);
 
-    const addEntry = (entry: PortfolioEntry) => {
+
+    const addEntry = async (entry: PortfolioEntry) => {
+        // Optimistic update
         setEntries(prev => {
             const newEntries = [...prev, entry].sort((a, b) =>
                 new Date(a.date).getTime() - new Date(b.date).getTime()
             );
             return newEntries;
         });
+
+        try {
+            const res = await fetch('/api/entries', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(entry),
+            });
+            if (res.ok) {
+                const savedEntry = await res.json();
+                // Update with server response (e.g. to get real ID if we generated a temp one, though we generate UUIDs client side mostly? 
+                // Actually Prisma generates UUIDs. The frontend currently might generate IDs.
+                // Let's trust the server ID.
+                setEntries(prev => prev.map(e => e.id === entry.id ? savedEntry : e));
+            }
+        } catch (error) {
+            console.error('Failed to add entry:', error);
+            // Revert on failure? For now just log.
+        }
     };
 
-    const removeEntry = (id: string) => {
+    const removeEntry = async (id: string) => {
         setEntries(prev => prev.filter(e => e.id !== id));
+        try {
+            await fetch(`/api/entries/${id}`, { method: 'DELETE' });
+        } catch (error) {
+            console.error('Failed to delete entry:', error);
+        }
     };
 
-    const updateEntry = (updated: PortfolioEntry) => {
+    const updateEntry = async (updated: PortfolioEntry) => {
         setEntries(prev => prev.map(e => e.id === updated.id ? updated : e)
             .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
         );
+        try {
+            await fetch(`/api/entries/${updated.id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(updated),
+            });
+        } catch (error) {
+            console.error('Failed to update entry:', error);
+        }
     };
 
     // KPI Calculations
@@ -72,8 +139,8 @@ export function usePortfolio() {
             };
         }
 
-        // Sort just in case
-        const sortedEntries = [...entries].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+        // Entries are maintained in sorted chronological order
+        const sortedEntries = entries;
         const lastEntry = sortedEntries[sortedEntries.length - 1];
 
         // Total Equity

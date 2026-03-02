@@ -1,0 +1,22 @@
+
+C:\Users\stefa\Documents\Antigravity\portfolio\app\api\entries\route.ts
+  3:10  warning  'PortfolioEntry' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\stefa\Documents\Antigravity\portfolio\components\Dashboard\AddEntryForm.tsx
+  27:13  warning  Unused eslint-disable directive (no problems were reported from 'react-hooks/set-state-in-effect')
+
+C:\Users\stefa\Documents\Antigravity\portfolio\components\Dashboard\GrowthChart.tsx
+  11:15  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\stefa\Documents\Antigravity\portfolio\components\Dashboard\ProjectionChart.tsx
+  38:44  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\stefa\Documents\Antigravity\portfolio\hooks\usePortfolio.ts
+  5:13  warning  'storage' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\stefa\Documents\Antigravity\portfolio\lib\prisma.ts
+  7:7  warning  'dbUrl' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+Ô£û 6 problems (2 errors, 4 warnings)
+  0 errors and 1 warning potentially fixable with the `--fix` option.
+

@@ -5,8 +5,7 @@ import { AppLayout } from "@/components/Layout/AppLayout";
 import { EntriesTable } from "@/components/Dashboard/EntriesTable";
 import { AddEntryForm } from "@/components/Dashboard/AddEntryForm";
 import { useMemo, useState } from "react";
-import { format, parseISO } from "date-fns";
-import { Download, Plus } from "lucide-react";
+import { Download } from "lucide-react";
 import { PortfolioEntry } from "@/types";
 
 export default function HistoryPage() {
@@ -47,8 +46,8 @@ export default function HistoryPage() {
     const yearlyStats = useMemo(() => {
         const stats: Record<string, { start: number, end: number, invested: number, gain: number }> = {};
 
-        // Sort chrono
-        const sorted = [...entries].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+        // entries are already sorted chronologically
+        const sorted = entries;
 
         // Group by year
         const entriesByYear: Record<string, typeof entries> = {};

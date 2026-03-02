@@ -6,6 +6,34 @@ interface GrowthChartProps {
     data: PortfolioEntry[];
 }
 
+interface CustomTooltipProps {
+    active?: boolean;
+    payload?: { value: number }[];
+    label?: string;
+}
+
+const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) => {
+    if (active && payload && payload.length) {
+        return (
+            <div className="bg-gray-900 border border-gray-700 p-3 rounded shadow-lg text-sm">
+                <p className="text-gray-300 mb-2">{format(parseISO(label || ''), 'dd MMM yyyy')}</p>
+                <div className="space-y-1">
+                    <p className="text-blue-400">
+                        Invested: <span className="font-bold text-white">€{payload[0].value.toLocaleString()}</span>
+                    </p>
+                    <p className="text-emerald-400">
+                        Market Gains: <span className="font-bold text-white">€{payload[1].value.toLocaleString()}</span>
+                    </p>
+                    <p className="text-gray-400 border-t border-gray-700 pt-1 mt-1">
+                        Total: <span className="font-bold text-white">€{(payload[0].value + payload[1].value).toLocaleString()}</span>
+                    </p>
+                </div>
+            </div>
+        );
+    }
+    return null;
+};
+
 export function GrowthChart({ data }: GrowthChartProps) {
     // Pre-process data to calculate cumulative invested using reduce to avoid mutation during map
     // Actually, we can just do a standard loop or reduce
@@ -23,28 +51,6 @@ export function GrowthChart({ data }: GrowthChartProps) {
         return acc;
     }, [] as Array<{ date: string; invested: number; equity: number; gains: number }>);
 
-    // CustomTooltip was defined but not used. Let's use it.
-    const CustomTooltip = ({ active, payload, label }: any) => {
-        if (active && payload && payload.length) {
-            return (
-                <div className="bg-gray-900 border border-gray-700 p-3 rounded shadow-lg text-sm">
-                    <p className="text-gray-300 mb-2">{format(parseISO(label), 'MMM yyyy')}</p>
-                    <div className="space-y-1">
-                        <p className="text-blue-400">
-                            Invested: <span className="font-bold text-white">€{payload[0].value.toLocaleString()}</span>
-                        </p>
-                        <p className="text-emerald-400">
-                            Market Gains: <span className="font-bold text-white">€{payload[1].value.toLocaleString()}</span>
-                        </p>
-                        <p className="text-gray-400 border-t border-gray-700 pt-1 mt-1">
-                            Total: <span className="font-bold text-white">€{(payload[0].value + payload[1].value).toLocaleString()}</span>
-                        </p>
-                    </div>
-                </div>
-            );
-        }
-        return null;
-    };
 
     return (
         <div className="h-[400px] w-full">
@@ -63,7 +69,7 @@ export function GrowthChart({ data }: GrowthChartProps) {
                     <CartesianGrid strokeDasharray="3 3" stroke="#374151" vertical={false} />
                     <XAxis
                         dataKey="date"
-                        tickFormatter={(str) => format(parseISO(str), 'MMM yy')}
+                        tickFormatter={(str) => format(parseISO(str), 'dd MMM yyyy')}
                         stroke="#9ca3af"
                         tick={{ fill: '#9ca3af', fontSize: 12 }}
                         tickMargin={10}

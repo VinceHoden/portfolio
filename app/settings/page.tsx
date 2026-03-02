@@ -21,17 +21,26 @@ export default function SettingsPage() {
         document.body.removeChild(link);
     };
 
-    const handleImport = () => {
+    const handleImport = async () => {
         if (!importData) return;
         try {
             const data = JSON.parse(importData);
             if (data.entries && Array.isArray(data.entries)) {
                 if (confirm("This will overwrite your current data. Are you sure?")) {
-                    localStorage.setItem("portfolio_entries", JSON.stringify(data.entries));
-                    if (data.projectionParams) {
-                        localStorage.setItem("projection_params", JSON.stringify(data.projectionParams));
+                    try {
+                        const res = await fetch("/api/data/import", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify(data),
+                        });
+                        if (res.ok) {
+                            window.location.reload();
+                        } else {
+                            alert("Failed to import data on the server.");
+                        }
+                    } catch (e) {
+                        alert("Network error during import.");
                     }
-                    window.location.reload();
                 }
             } else {
                 alert("Invalid data format");
@@ -41,10 +50,18 @@ export default function SettingsPage() {
         }
     };
 
-    const handleClearData = () => {
+    const handleClearData = async () => {
         if (confirm("ARE YOU SURE? This will permanently delete all your data.")) {
-            localStorage.clear();
-            window.location.reload();
+            try {
+                const res = await fetch("/api/data/clear", { method: "POST" });
+                if (res.ok) {
+                    window.location.reload();
+                } else {
+                    alert("Failed to clear data on the server.");
+                }
+            } catch (e) {
+                alert("Network error during clear.");
+            }
         }
     };
 

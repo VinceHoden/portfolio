@@ -1,5 +1,4 @@
-import { ArrowUpRight, ArrowDownRight, Euro, Percent, Wallet, TrendingUp, Target, Calendar, Anchor } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { ArrowUpRight, Wallet, TrendingUp, Target, Calendar, Anchor } from 'lucide-react';
 import { calculateTimeUntilTarget } from "@/lib/finance";
 
 interface KPICardsProps {
@@ -65,8 +64,10 @@ export function KPICards({ totalEquity, netInvested, totalReturn, xirr, projecti
                     </div>
                     <span className="text-sm font-medium text-gray-400">Total Equity</span>
                 </div>
-                <div className="mt-2 min-h-[3.5rem]">
-                    <span className="text-3xl font-bold text-white tracking-tight">{formatCurrency(totalEquity)}</span>
+                <div className="mt-2 h-20">
+                    <div className="h-9 flex items-end">
+                        <span className="text-3xl font-bold text-white tracking-tight">{formatCurrency(totalEquity)}</span>
+                    </div>
                     {timeToFreedom && (
                         <div className="mt-1">
                             <div className="group relative inline-flex items-center gap-1.5 text-xs text-blue-300 bg-blue-500/10 px-2 py-0.5 rounded border border-blue-500/20 cursor-help">
@@ -127,8 +128,10 @@ export function KPICards({ totalEquity, netInvested, totalReturn, xirr, projecti
                     </div>
                     <span className="text-sm font-medium text-gray-400">Net Invested</span>
                 </div>
-                <div className="mt-2">
-                    <span className="text-3xl font-bold text-white tracking-tight">{formatCurrency(netInvested)}</span>
+                <div className="mt-2 h-20">
+                    <div className="h-9 flex items-end">
+                        <span className="text-3xl font-bold text-white tracking-tight">{formatCurrency(netInvested)}</span>
+                    </div>
                 </div>
             </div>
 
@@ -140,10 +143,12 @@ export function KPICards({ totalEquity, netInvested, totalReturn, xirr, projecti
                     </div>
                     <span className="text-sm font-medium text-gray-400">Total Profit/Loss</span>
                 </div>
-                <div className="mt-2 min-h-[3.5rem]">
-                    <span className={`text-3xl font-bold tracking-tight ${totalReturn >= 0 ? 'text-white' : 'text-red-400'}`}>
-                        {totalReturn >= 0 ? '+' : ''}{formatCurrency(totalReturn)}
-                    </span>
+                <div className="mt-2 h-20">
+                    <div className="h-9 flex items-end">
+                        <span className={`text-3xl font-bold tracking-tight ${totalReturn >= 0 ? 'text-white' : 'text-red-400'}`}>
+                            {totalReturn >= 0 ? '+' : ''}{formatCurrency(totalReturn)}
+                        </span>
+                    </div>
                     <div className="mt-1">
                         <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${totalReturn >= 0 ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20' : 'bg-red-500/10 text-red-500 border border-red-500/20'
                             }`}>
@@ -161,11 +166,13 @@ export function KPICards({ totalEquity, netInvested, totalReturn, xirr, projecti
                     </div>
                     <span className="text-sm font-medium text-gray-400">Internal Rate of Return</span>
                 </div>
-                <div className="mt-2">
-                    <span className={`text-3xl font-bold tracking-tight ${xirr >= 0 ? 'text-white' : 'text-red-400'}`}>
-                        {(xirr * 100).toFixed(2)}%
-                    </span>
-                    <span className="text-xs text-gray-500 ml-2">Annualized</span>
+                <div className="mt-2 h-20">
+                    <div className="h-9 flex items-end">
+                        <span className={`text-3xl font-bold tracking-tight ${xirr >= 0 ? 'text-white' : 'text-red-400'}`}>
+                            {(xirr * 100).toFixed(2)}%
+                        </span>
+                        <span className="text-xs text-gray-500 ml-2 mb-1">p.a.</span>
+                    </div>
                 </div>
             </div>
 
@@ -177,9 +184,13 @@ export function KPICards({ totalEquity, netInvested, totalReturn, xirr, projecti
                     </div>
                     <span className="text-sm font-medium text-gray-400">Monthly Passive Income</span>
                 </div>
-                <div className="mt-2 min-h-[3.5rem]">
-                    <span className="text-3xl font-bold text-white tracking-tight">{formatCurrency(swrMonthly)}</span>
-                    <span className="text-xs text-gray-500 ml-2 block mt-1">@ 4% Safe Withdrawal</span>
+                <div className="mt-2 h-20">
+                    <div className="h-9 flex items-end">
+                        <span className="text-3xl font-bold text-white tracking-tight">{formatCurrency(swrMonthly)}</span>
+                    </div>
+                    <div className="mt-1">
+                        <span className="text-xs text-gray-500 block">@ 4% Safe Withdrawal</span>
+                    </div>
                 </div>
 
                 {/* Goal: Monetary Target */}

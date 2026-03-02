@@ -10,10 +10,8 @@ interface EntriesTableProps {
 }
 
 export function EntriesTable({ entries, onDelete, onEdit, limit }: EntriesTableProps) {
-    // Sort descending by date
-    const sortedEntries = [...entries].sort((a, b) =>
-        new Date(b.date).getTime() - new Date(a.date).getTime()
-    );
+    // Entries are already sorted chronologically (ascending), so just reverse for descending
+    const sortedEntries = [...entries].reverse();
 
     const displayedEntries = limit ? sortedEntries.slice(0, limit) : sortedEntries;
 
@@ -40,7 +38,7 @@ export function EntriesTable({ entries, onDelete, onEdit, limit }: EntriesTableP
                             displayedEntries.map((entry) => (
                                 <tr key={entry.id} className="hover:bg-gray-800/50 transition-colors">
                                     <td className="px-6 py-4 font-medium text-white">
-                                        {format(parseISO(entry.date), 'MMMM d, yyyy')}
+                                        {format(parseISO(entry.date), 'dd MMM yyyy')}
                                     </td>
                                     <td className="px-6 py-4 text-right text-gray-200">
                                         €{entry.equity.toLocaleString()}
