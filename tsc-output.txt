@@ -1,0 +1,4 @@
+e2e-tests/persistence.spec.ts(15,79): error TS7031: Binding element 'request' implicitly has an 'any' type.
+e2e-tests/persistence.spec.ts(28,49): error TS7031: Binding element 'request' implicitly has an 'any' type.
+hooks/usePortfolio.ts(21,31): error TS2552: Cannot find name 'storage'. Did you mean 'Storage'?
+hooks/usePortfolio.ts(22,30): error TS2552: Cannot find name 'storage'. Did you mean 'Storage'?

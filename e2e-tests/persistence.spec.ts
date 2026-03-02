@@ -1,6 +1,8 @@
-const { test, expect } = require('@playwright/test');
-const fs = require('fs');
-const path = require('path');
+
+import { test, expect } from '@playwright/test';
+import type { APIRequestContext } from '@playwright/test';
+import * as fs from 'fs';
+import * as path from 'path';
 
 test.describe('Verify JSON Data Persistence', () => {
     const dataFilePath = path.join(process.cwd(), 'data.json');
@@ -12,7 +14,7 @@ test.describe('Verify JSON Data Persistence', () => {
         }
     });
 
-    test('should create data.json with default settings on startup', async ({ request }) => {
+    test('should create data.json with default settings on startup', async ({ request }: { request: APIRequestContext }) => {
         // Calling the API should trigger data.json creation
         const response = await request.get('/api/settings');
         expect(response.ok()).toBeTruthy();
@@ -25,7 +27,7 @@ test.describe('Verify JSON Data Persistence', () => {
         expect(data.entries.length).toBe(0);
     });
 
-    test('should persist new entries', async ({ request }) => {
+    test('should persist new entries', async ({ request }: { request: APIRequestContext }) => {
         // 1. Create a new entry
         const newEntryResponse = await request.post('/api/entries', {
             data: {

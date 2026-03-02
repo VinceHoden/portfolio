@@ -38,7 +38,7 @@ export default function SettingsPage() {
                         } else {
                             alert("Failed to import data on the server.");
                         }
-                    } catch (e) {
+                    } catch {
                         alert("Network error during import.");
                     }
                 }
@@ -59,7 +59,7 @@ export default function SettingsPage() {
                 } else {
                     alert("Failed to clear data on the server.");
                 }
-            } catch (e) {
+            } catch {
                 alert("Network error during clear.");
             }
         }

@@ -1,0 +1,17 @@
+
+> portfolio@0.1.0 lint
+> eslint
+
+
+C:\Users\stefa\Documents\Antigravity\portfolio\components\Dashboard\GrowthChart.tsx
+  12:15  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\stefa\Documents\Antigravity\portfolio\e2e-tests\persistence.spec.ts
+  1:1  error  Do not use "@ts-nocheck" because it alters compilation errors  @typescript-eslint/ban-ts-comment
+
+C:\Users\stefa\Documents\Antigravity\portfolio\hooks\usePortfolio.ts
+  22:9  warning  Unused eslint-disable directive (no problems were reported from 'react-hooks/set-state-in-effect')
+
+Ô£û 3 problems (2 errors, 1 warning)
+  0 errors and 1 warning potentially fixable with the `--fix` option.
+

@@ -1,0 +1,88 @@
+
+> portfolio@0.1.0 lint
+> eslint
+
+
+C:\Users\stefa\Documents\Antigravity\portfolio\app\settings\page.tsx
+  41:30  warning  'e' is defined but never used  @typescript-eslint/no-unused-vars
+  62:22  warning  'e' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\stefa\Documents\Antigravity\portfolio\components\Dashboard\AddEntryForm.tsx
+  1:1  warning  Unused eslint-disable directive (no problems were reported from 'react-hooks/set-state-in-effect')
+
+C:\Users\stefa\Documents\Antigravity\portfolio\components\Dashboard\GrowthChart.tsx
+   2:15  warning  'TooltipProps' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @typescript-eslint/no-unused-vars
+   3:15  warning  'NameType' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @typescript-eslint/no-unused-vars
+   3:25  warning  'ValueType' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   @typescript-eslint/no-unused-vars
+  29:56  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @typescript-eslint/no-explicit-any
+  79:40  error    Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+C:\Users\stefa\Documents\Antigravity\portfolio\components\Dashboard\GrowthChart.tsx:79:40
+  77 |                         tickFormatter={(val) => `Ôé¼${val / 1000}k`}
+  78 |                     />
+> 79 |                     <Tooltip content={<CustomTooltip />} />
+     |                                        ^^^^^^^^^^^^^ This component is created during render
+  80 |                     <Area
+  81 |                         type="monotone"
+  82 |                         dataKey="invested"
+
+C:\Users\stefa\Documents\Antigravity\portfolio\components\Dashboard\GrowthChart.tsx:29:27
+  27 |
+  28 |     // CustomTooltip was defined but not used. Let's use it.
+> 29 |     const CustomTooltip = ({ active, payload, label }: any) => {
+     |                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 30 |         if (active && payload && payload.length) {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 31 |             return (
+     ÔÇª
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 48 |         return null;
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 49 |     };
+     | ^^^^^^ The component is created during render here
+  50 |
+  51 |     return (
+  52 |         <div className="h-[400px] w-full">  react-hooks/static-components
+
+C:\Users\stefa\Documents\Antigravity\portfolio\components\Dashboard\ProjectionChart.tsx
+  38:44  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\stefa\Documents\Antigravity\portfolio\e2e-tests\persistence.spec.ts
+  1:26  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  2:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  3:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+C:\Users\stefa\Documents\Antigravity\portfolio\hooks\usePortfolio.ts
+  24:9  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\stefa\Documents\Antigravity\portfolio\hooks\usePortfolio.ts:24:9
+  22 |         const loadedParams = storage.loadProjectionParams();
+  23 |
+> 24 |         setEntries(loadedEntries);
+     |         ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  25 |         if (loadedParams) {
+  26 |             setProjectionParams(loadedParams);
+  27 |         }  react-hooks/set-state-in-effect
+
+C:\Users\stefa\Documents\Antigravity\portfolio\lib\db.ts
+   49:27  error  Unexpected any. Specify a different type               @typescript-eslint/no-explicit-any
+   51:39  error  Unexpected any. Specify a different type               @typescript-eslint/no-explicit-any
+   65:5   error  'writeQueue' is never reassigned. Use 'const' instead  prefer-const
+   88:21  error  Unexpected any. Specify a different type               @typescript-eslint/no-explicit-any
+  197:36  error  Unexpected any. Specify a different type               @typescript-eslint/no-explicit-any
+
+C:\Users\stefa\Documents\Antigravity\portfolio\scripts\add_entry.js
+  1:9   warning  'chromium' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  1:22  error    A `require()` style import is forbidden        @typescript-eslint/no-require-imports
+
+Ô£û 20 problems (13 errors, 7 warnings)
+  1 error and 1 warning potentially fixable with the `--fix` option.
+
