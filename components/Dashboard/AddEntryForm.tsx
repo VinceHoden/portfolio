@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { PortfolioEntry } from '@/types';
 import { X } from 'lucide-react';
 
@@ -13,22 +13,9 @@ interface AddEntryFormProps {
 }
 
 export function AddEntryForm({ isOpen, onClose, onSave, initialData }: AddEntryFormProps) {
-    const [date, setDate] = useState(new Date().toISOString().slice(0, 10)); // YYYY-MM-DD
-    const [equity, setEquity] = useState('');
-    const [netInflow, setNetInflow] = useState('');
-
-    useEffect(() => {
-        if (isOpen && initialData) {
-            setDate(initialData.date);
-            setEquity(initialData.equity.toString());
-            setNetInflow(initialData.netInflow.toString());
-        } else if (isOpen && !initialData) {
-            // Reset for new entry
-            setDate(new Date().toISOString().slice(0, 10));
-            setEquity('');
-            setNetInflow('');
-        }
-    }, [isOpen, initialData]);
+    const [date, setDate] = useState(() => initialData?.date ?? new Date().toISOString().slice(0, 10)); // YYYY-MM-DD
+    const [equity, setEquity] = useState(() => initialData?.equity.toString() ?? '');
+    const [netInflow, setNetInflow] = useState(() => initialData?.netInflow.toString() ?? '');
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();

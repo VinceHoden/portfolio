@@ -16,32 +16,16 @@ export function usePortfolio() {
     const [projectionParams, setProjectionParams] = useState<ProjectionParams>(DEFAULT_PROJECTION_PARAMS);
     const [isLoaded, setIsLoaded] = useState(false);
 
-    // Load data on mount
+    // Load data on mount - ensure this runs only on client to match server HTML (empty initially)
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const [entriesRes, settingsRes] = await Promise.all([
-                    fetch('/api/entries'),
-                    fetch('/api/settings')
-                ]);
+        const loadedEntries = storage.loadEntries();
+        const loadedParams = storage.loadProjectionParams();
 
-                if (entriesRes.ok) {
-                    const data = await entriesRes.json();
-                    setEntries(data);
-                }
-
-                if (settingsRes.ok) {
-                    const data = await settingsRes.json();
-                    setProjectionParams(data);
-                }
-            } catch (error) {
-                console.error('Failed to load portfolio data:', error);
-            } finally {
-                setIsLoaded(true);
-            }
-        };
-
-        fetchData();
+        setEntries(loadedEntries);
+        if (loadedParams) {
+            setProjectionParams(loadedParams);
+        }
+        setIsLoaded(true);
     }, []);
 
     // Persist data on change
