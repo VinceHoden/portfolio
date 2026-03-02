@@ -191,12 +191,15 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      <AddEntryForm
-        isOpen={isAddEntryOpen}
-        onClose={handleCloseEntryForm}
-        onSave={handleSaveEntry}
-        initialData={editingEntry}
-      />
+      {isAddEntryOpen && (
+        <AddEntryForm
+          key={editingEntry?.id ?? "new-entry"}
+          isOpen={isAddEntryOpen}
+          onClose={handleCloseEntryForm}
+          onSave={handleSaveEntry}
+          initialData={editingEntry}
+        />
+      )}
     </AppLayout>
   );
 }

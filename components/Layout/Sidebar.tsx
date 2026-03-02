@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, History, Settings, LogOut, PlusCircle } from 'lucide-react';
+import { LayoutDashboard, History, Settings, PlusCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const navItems = [

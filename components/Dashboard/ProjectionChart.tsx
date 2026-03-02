@@ -35,7 +35,7 @@ export function ProjectionChart({ data }: ProjectionChartProps) {
                     />
                     <Tooltip
                         contentStyle={{ backgroundColor: '#111827', borderColor: '#374151', color: '#f3f4f6' }}
-                        formatter={(value: any) => [`€${Math.round(Number(value)).toLocaleString()}`, ""]}
+                        formatter={(value: number | string) => [`€${Math.round(Number(value)).toLocaleString()}`, ""]}
                         labelFormatter={(label) => `Year ${new Date().getFullYear() + Math.floor(Number(label))}`}
                     />
                     <Legend />

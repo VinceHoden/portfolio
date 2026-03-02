@@ -5,8 +5,7 @@ import { AppLayout } from "@/components/Layout/AppLayout";
 import { EntriesTable } from "@/components/Dashboard/EntriesTable";
 import { AddEntryForm } from "@/components/Dashboard/AddEntryForm";
 import { useMemo, useState } from "react";
-import { format, parseISO } from "date-fns";
-import { Download, Plus } from "lucide-react";
+import { Download } from "lucide-react";
 import { PortfolioEntry } from "@/types";
 
 export default function HistoryPage() {
@@ -158,12 +157,15 @@ export default function HistoryPage() {
                 </div>
             </div>
 
-            <AddEntryForm
-                isOpen={isAddEntryOpen}
-                onClose={handleCloseEntryForm}
-                onSave={handleSaveEntry}
-                initialData={editingEntry}
-            />
+            {isAddEntryOpen && (
+                <AddEntryForm
+                    key={editingEntry?.id ?? "new-entry"}
+                    isOpen={isAddEntryOpen}
+                    onClose={handleCloseEntryForm}
+                    onSave={handleSaveEntry}
+                    initialData={editingEntry}
+                />
+            )}
         </AppLayout>
     );
 }

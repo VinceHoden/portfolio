@@ -1,9 +1,36 @@
 import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
+import type { TooltipProps } from 'recharts';
+import type { NameType, ValueType } from 'recharts/types/component/DefaultTooltipContent';
 import { PortfolioEntry } from '@/types';
 import { format, parseISO } from 'date-fns';
 
 interface GrowthChartProps {
     data: PortfolioEntry[];
+}
+
+function CustomTooltip({ active, payload, label }: TooltipProps<ValueType, NameType>) {
+    if (active && payload && payload.length && typeof label === 'string') {
+        const invested = Number(payload[0]?.value ?? 0);
+        const gains = Number(payload[1]?.value ?? 0);
+
+        return (
+            <div className="bg-gray-900 border border-gray-700 p-3 rounded shadow-lg text-sm">
+                <p className="text-gray-300 mb-2">{format(parseISO(label), 'MMM yyyy')}</p>
+                <div className="space-y-1">
+                    <p className="text-blue-400">
+                        Invested: <span className="font-bold text-white">€{invested.toLocaleString()}</span>
+                    </p>
+                    <p className="text-emerald-400">
+                        Market Gains: <span className="font-bold text-white">€{gains.toLocaleString()}</span>
+                    </p>
+                    <p className="text-gray-400 border-t border-gray-700 pt-1 mt-1">
+                        Total: <span className="font-bold text-white">€{(invested + gains).toLocaleString()}</span>
+                    </p>
+                </div>
+            </div>
+        );
+    }
+    return null;
 }
 
 export function GrowthChart({ data }: GrowthChartProps) {
@@ -22,29 +49,6 @@ export function GrowthChart({ data }: GrowthChartProps) {
         });
         return acc;
     }, [] as Array<{ date: string; invested: number; equity: number; gains: number }>);
-
-    // CustomTooltip was defined but not used. Let's use it.
-    const CustomTooltip = ({ active, payload, label }: any) => {
-        if (active && payload && payload.length) {
-            return (
-                <div className="bg-gray-900 border border-gray-700 p-3 rounded shadow-lg text-sm">
-                    <p className="text-gray-300 mb-2">{format(parseISO(label), 'MMM yyyy')}</p>
-                    <div className="space-y-1">
-                        <p className="text-blue-400">
-                            Invested: <span className="font-bold text-white">€{payload[0].value.toLocaleString()}</span>
-                        </p>
-                        <p className="text-emerald-400">
-                            Market Gains: <span className="font-bold text-white">€{payload[1].value.toLocaleString()}</span>
-                        </p>
-                        <p className="text-gray-400 border-t border-gray-700 pt-1 mt-1">
-                            Total: <span className="font-bold text-white">€{(payload[0].value + payload[1].value).toLocaleString()}</span>
-                        </p>
-                    </div>
-                </div>
-            );
-        }
-        return null;
-    };
 
     return (
         <div className="h-[400px] w-full">
